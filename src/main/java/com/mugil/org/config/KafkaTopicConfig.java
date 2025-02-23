@@ -9,7 +9,7 @@ import org.springframework.kafka.config.TopicBuilder;
 public class KafkaTopicConfig {
     @Bean
     public NewTopic placeOrderTopic(){
-        return TopicBuilder.name("EKart-NewOrder")
+        return TopicBuilder.name("MsgTopic")
                 .build();
     }
 }

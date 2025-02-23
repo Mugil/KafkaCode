@@ -1,30 +1,28 @@
 package com.mugil.org.controller;
 
-import com.mugil.org.service.ProducerService;
+import com.mugil.org.model.User;
+import com.mugil.org.service.UserDetailsProducerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/producer")
 public class ProducerController {
-    private ProducerService producerService;
+    private UserDetailsProducerService userDetailsProducerService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProducerController.class);
 
-    public ProducerController(ProducerService producerService){
-        this.producerService= producerService;
+    public ProducerController(UserDetailsProducerService userDetailsProducerService){
+        this.userDetailsProducerService = userDetailsProducerService;
     }
 
-    @GetMapping("/sendmsg")
-    public ResponseEntity<String> placeOrder(@RequestParam("msg") String msg){
-        LOGGER.info("Message from Producer {} ", msg);
-        producerService.sendMessage(msg);
-        return ResponseEntity.ok("Message Received Successfully");
+    @PostMapping("/adduser")
+    public ResponseEntity<String> placeOrder(@RequestBody User user){
+        LOGGER.info("Message from Postman {} ", user);
+        userDetailsProducerService.sendMessage(user);
+        return ResponseEntity.ok("User Details Received Successfully");
     }
 
 
