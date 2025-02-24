@@ -10,8 +10,15 @@ import org.springframework.stereotype.Service;
 public class ConsumerService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConsumerService.class);
 
-    @KafkaListener(topics="MsgTopic", groupId ="msgGrp")
-    public void consume(User user){
-        LOGGER.info(String.format("Message Received -> %s", user));
+    @KafkaListener(topics="userDetails", groupId ="usrGrp")
+    public void userConsumer1(User user){
+        LOGGER.info(String.format("Consumer1 Received Message -> %s", user));
+        LOGGER.info("--------------------------------------------------------------------------------------------------------------------------------");
+    }
+
+    @KafkaListener(topics="userDetails", groupId ="usrGrp")
+    public void userConsumer2(User user){
+        LOGGER.info(String.format("Consumer2 Received Message -> %s", user));
+        LOGGER.info("--------------------------------------------------------------------------------------------------------------------------------");
     }
 }

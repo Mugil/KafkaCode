@@ -9,7 +9,8 @@ import org.springframework.kafka.config.TopicBuilder;
 public class KafkaTopicConfig {
     @Bean
     public NewTopic placeOrderTopic(){
-        return TopicBuilder.name("MsgTopic")
+        return TopicBuilder.name("userDetails")
+                .partitions(4)
                 .build();
     }
 }

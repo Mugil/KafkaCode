@@ -5,9 +5,12 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class UserDetailsProducerService {
@@ -26,6 +29,16 @@ public class UserDetailsProducerService {
                 .setHeader(KafkaHeaders.TOPIC, "userDetails")
                 .build();
 
-        this.kafkaTemplate.send(msg);
+        CompletableFuture<SendResult<String, String>> future = this.kafkaTemplate.send(msg);
+
+        //Asychronous callback
+        future.whenComplete((result, ex) ->{
+            if(ex == null)
+            {
+                LOGGER.info("Sent Message=[{}] with offset - {}, partition - {}", user, result.getRecordMetadata().offset(), result.getRecordMetadata().partition());
+            }else{
+                LOGGER.info("Unable to Send Message...", ex.getMessage());
+            }
+        });
     }
 }

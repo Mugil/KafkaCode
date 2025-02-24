@@ -8,6 +8,7 @@
 1. Created new Model object - User
 2. The Rest Controller Takes Model object as input in POST Mapping method
 3. MessageBuilder is used to build the Payload from User Model Object
+4. Added Asynchronous Callback by getting return value from send in producer
 
 ## Already Exists
 
