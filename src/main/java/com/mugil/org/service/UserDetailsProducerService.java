@@ -15,9 +15,9 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class UserDetailsProducerService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserDetailsProducerService.class);
-    private KafkaTemplate<String, String> kafkaTemplate;
+    private KafkaTemplate<String, Object> kafkaTemplate;
 
-    public UserDetailsProducerService(KafkaTemplate<String, String> kafkaTemplate) {
+    public UserDetailsProducerService(KafkaTemplate<String, Object> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
@@ -29,7 +29,7 @@ public class UserDetailsProducerService {
                 .setHeader(KafkaHeaders.TOPIC, "userDetails")
                 .build();
 
-        CompletableFuture<SendResult<String, String>> future = this.kafkaTemplate.send(msg);
+        CompletableFuture<SendResult<String, Object>> future = this.kafkaTemplate.send(msg);
 
         //Asychronous callback
         future.whenComplete((result, ex) ->{
